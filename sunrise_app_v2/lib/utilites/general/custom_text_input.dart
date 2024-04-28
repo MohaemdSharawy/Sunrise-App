@@ -36,13 +36,13 @@ class CustomTextInput extends StatelessWidget {
         decoration: InputDecoration(
           prefixIcon: Icon(
             icon,
-            color: Colors.black.withOpacity(.7),
+            color: Colors.grey,
           ),
           border: InputBorder.none,
           hintMaxLines: 1,
           hintText: hintText,
           hintStyle:
-              TextStyle(fontSize: 14, color: Colors.black.withOpacity(.5)),
+              TextStyle(fontSize: 14, color: Colors.grey.withOpacity(.5)),
         ),
       ),
     );

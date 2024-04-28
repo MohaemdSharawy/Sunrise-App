@@ -13,49 +13,40 @@ class MainScree extends StatefulWidget {
 
 class _MainScreeState extends State<MainScree> {
   final navigationController = Get.put(CustomNavigationNController());
-  int currentIndex = 0;
+  // int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: navigationController.screens['auth']?[0],
-      bottomNavigationBar: BottomNavyBar(
-        selectedIndex: currentIndex,
-        showElevation: true,
-        itemCornerRadius: 8,
-        curve: Curves.easeInBack,
-        onItemSelected: (index) => setState(() {
-          currentIndex = index;
-        }),
-        items: [
-          BottomNavyBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-            activeColor: AppColor.primary,
-            textAlign: TextAlign.center,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Profile'),
-            activeColor: AppColor.primary,
-            textAlign: TextAlign.center,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.notifications_active),
-            title: Text(
-              'Notifications',
-            ),
-            activeColor: AppColor.primary,
-            textAlign: TextAlign.center,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.settings),
-            title: Text('Settings'),
-            activeColor: AppColor.primary,
-            textAlign: TextAlign.center,
-          ),
-        ],
+    return Obx(
+      () => Scaffold(
+        body: navigationController
+                .screens[navigationController.selected_type.value]
+            ?[navigationController.current_index.value],
+        bottomNavigationBar: BottomNavyBar(
+          selectedIndex: navigationController.current_index.value,
+          showElevation: true,
+          itemCornerRadius: 8,
+          curve: Curves.easeInBack,
+          onItemSelected: (index) => setState(() {
+            navigationController.current_index.value = index;
+          }),
+          items: [
+            for (var i = 0;
+                i <
+                    navigationController
+                        .screen_names[navigationController.selected_type.value]!
+                        .length;
+                i++)
+              BottomNavyBarItem(
+                icon: navigationController
+                    .screen_icons[navigationController.selected_type.value]![i],
+                title: Text(navigationController.screen_names[
+                    navigationController.selected_type.value]![i]),
+                activeColor: AppColor.primary,
+                textAlign: TextAlign.center,
+              ),
+          ],
+        ),
       ),
     );
   }
