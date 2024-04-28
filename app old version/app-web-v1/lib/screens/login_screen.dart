@@ -575,6 +575,8 @@ class LoginScreenState extends State<LoginScreen>
                                 "Confirm",
                               ).tr(),
                               onPressed: () async {
+                                GetStorage()
+                                    .write('see_time_msg', 'not_showed');
                                 if (_formKey.currentState!.validate()) {
                                   await pmsController.login(
                                     room_no: _roomNumberController.text,

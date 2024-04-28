@@ -180,6 +180,28 @@ mixin BaseController {
   }
 
   npsQuestion(context) async {
+    // print(GetStorage().read('see_time_msg'));
+    // if (GetStorage().read('see_time_msg') != 'showed' &&
+    //     GetStorage().read('h_id').toString() != '19') {
+    //   return AwesomeDialog(
+    //     context: context,
+    //     width: 1050,
+    //     dialogType: DialogType.warning,
+    //     animType: AnimType.rightSlide,
+    //     dialogBackgroundColor: Colors.black,
+    //     body: Container(
+    //       padding: EdgeInsets.all(15),
+    //       child: Text(
+    //         'Dear guest Kindly note that Summer time will start as of Thursday 25-04-2024 midnight therefore we kindly ask you to adjust your watch one hour ahead to be 01:00 am instead of 00:00 midnight.  The Sunrise team wishes you a pleasant holiday',
+    //         style: TextStyle(color: Colors.white, fontSize: 20),
+    //       ).tr(),
+    //     ),
+    //     btnCancelOnPress: () {
+    //       GetStorage().write('see_time_msg', 'showed');
+    //     },
+    //     btnCancelText: tr('cancel'),
+    //   ).show();
+    // }
     // // print(GetStorage().read('arrival'));
     // final surveyController = Get.put(SurveyController());
     // final hotelController = Get.put(HotelsController());
