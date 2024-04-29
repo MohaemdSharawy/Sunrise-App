@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sunrise_app_v2/constant/app_colors.dart';
 import 'package:sunrise_app_v2/constant/app_font.dart';
-import 'package:sunrise_app_v2/utilites/general/custom_btn.dart';
 import 'package:sunrise_app_v2/utilites/general/custom_header.dart';
-import 'package:sunrise_app_v2/utilites/general/custom_text_input.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -59,8 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               children: [
                 Container(
-                  height: 200,
-                  width: MediaQuery.of(context).size.width / 2.4,
+                  height: 250,
+                  width: 200,
                   child: Card(
                     clipBehavior: Clip.antiAlias,
                     shape: RoundedRectangleBorder(
@@ -74,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             'https://yourcart.sunrise-resorts.com/assets/uploads/logos/1.Meraki%20Girl.png',
                           ),
                           fit: BoxFit.cover,
-                          height: 200,
-                          width: MediaQuery.of(context).size.width / 2.4,
+                          height: 250,
+                          width: 200,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -89,8 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Container(
-                  height: 200,
-                  width: MediaQuery.of(context).size.width / 2,
+                  height: 250,
+                  width: 200,
                   child: Card(
                     clipBehavior: Clip.antiAlias,
                     shape: RoundedRectangleBorder(
@@ -104,8 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             'https://yourcart.sunrise-resorts.com/assets/uploads/logos/2.%20HO%20Pool%20Overview%202.png',
                           ),
                           fit: BoxFit.cover,
-                          height: 200,
-                          width: MediaQuery.of(context).size.width / 2,
+                          height: 250,
+                          width: 200,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -119,8 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Container(
-                  height: 200,
-                  width: MediaQuery.of(context).size.width / 2,
+                  height: 250,
+                  width: 200,
                   child: Card(
                     clipBehavior: Clip.antiAlias,
                     shape: RoundedRectangleBorder(
@@ -134,8 +132,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             'https://yourcart.sunrise-resorts.com/assets/uploads/logos/1.2_Lobby_Terrace.jpg',
                           ),
                           fit: BoxFit.cover,
-                          height: 200,
-                          width: MediaQuery.of(context).size.width / 2,
+                          height: 250,
+                          width: 200,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -404,7 +402,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: MediaQuery.of(context).size.width - 40,
                 height: 140,
                 child: Card(
-                  color: Colors.white[200],
+                  color: Colors.white,
                   child: Row(
                     children: [
                       Container(
