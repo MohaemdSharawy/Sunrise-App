@@ -11,7 +11,7 @@ class CustomButtonOnBoarding extends GetView<OnBoardingControllerImplement> {
     return Container(
       color: Colors.white,
       margin: const EdgeInsets.only(bottom: 30),
-      height: 55.0,
+      height: 53.0,
       child: MaterialButton(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(

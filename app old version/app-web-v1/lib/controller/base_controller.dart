@@ -180,6 +180,37 @@ mixin BaseController {
   }
 
   npsQuestion(context) async {
+    var now = DateTime.now();
+    var formatter = DateFormat('yyyy-MM-dd');
+    String today = formatter.format(now);
+
+    // var last_smg =   GetStorage().read('last_msg');
+   
+    List<String> hotel_list = ["6" , "7", "8" , "12" , "13","15" ,"16"];
+    if(GetStorage().read('h_id')  != null){     
+      if(hotel_list.contains(GetStorage().read('h_id').toString())){
+          return AwesomeDialog(
+            context: context,
+            width: 1050,
+            dialogType: DialogType.warning,
+            animType: AnimType.rightSlide,
+            dialogBackgroundColor: Colors.black,
+            body: SingleChildScrollView(
+              child: Image.network(
+                'https://app.sunrise-resorts.com/pop_img_sharm.jpg',
+                width: 1000,
+                height: 500,
+                fit: BoxFit.cover),
+            ),
+            btnCancelOnPress: () {
+              // GetStorage().write('see_time_msg', 'showed');
+            },
+            btnCancelText: tr('cancel'),
+          ).show();
+      }
+    }
+    // if( hotel  GetStorage().read('h_id').toString()){}
+
     // print(GetStorage().read('see_time_msg'));
     // if (GetStorage().read('see_time_msg') != 'showed' &&
     //     GetStorage().read('h_id').toString() != '19') {

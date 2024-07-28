@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:sunrise_app_v2/constant/app_colors.dart';
 import 'package:sunrise_app_v2/constant/app_font.dart';
@@ -8,10 +10,10 @@ import 'package:sunrise_app_v2/utilites/general/custom_text_input.dart';
 
 class CustomStayHeader extends StatefulWidget {
   String search_hint;
-  String hotel_name;
+  Widget title;
   CustomStayHeader({
     this.search_hint = 'Search Facilities',
-    required this.hotel_name,
+    required this.title,
     super.key,
   });
 
@@ -43,7 +45,7 @@ class _CustomStayHeaderState extends State<CustomStayHeader> {
                   Container(
                     padding: EdgeInsets.only(top: 5),
                     height: 57,
-                    width: MediaQuery.of(context).size.width / 2.22,
+                    width: MediaQuery.of(context).size.width / 1.6,
                     child: CustomTextInput(
                       hintText: widget.search_hint,
                       icon: Icons.search_rounded,
@@ -52,21 +54,36 @@ class _CustomStayHeaderState extends State<CustomStayHeader> {
                   SizedBox(
                     width: 10,
                   ),
-                  Container(
-                    height: 53,
-                    padding: EdgeInsets.only(right: 8),
-                    child: CustomBtn(
-                        title: Text('Check In'),
-                        action: () => {print('Chick in Clicked')}),
-                  ),
+                  // Container(
+                  //   height: 53,
+                  //   padding: EdgeInsets.only(right: 8),
+                  //   child: CustomBtn(
+                  //       title: Text('Check In'),
+                  //       action: () => {print('Chick in Clicked')}),
+                  // ),
                 ],
               ),
               SizedBox(
-                height: 12,
+                height: 8,
               ),
-              Text(
-                widget.hotel_name,
-                style: AppFont.boldBlack,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () => Get.back(),
+                    icon: Icon(Icons.arrow_back_ios_new),
+                  ),
+                  // InkWell(
+                  //   onTap: () => Get.back(),
+                  //   child: Icon(Icons.arrow_back_ios_new),
+                  // ),
+                  // Text(
+                  //   widget.hotel_name,
+                  //   style: AppFont.boldBlack,
+                  // ),
+                  widget.title,
+                  Container()
+                ],
               )
             ],
           ),

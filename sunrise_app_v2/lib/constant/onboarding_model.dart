@@ -17,5 +17,5 @@ List<OnBoardingModel> onBoardingList = [
       body:
           'A met minim non deserunt ullamco est sti aliqua dolor do amet slint. velit officia consequat duls enim velit molit ',
       image: 'https://app.sunrise-resorts.com/app_assets/3Onboarding.png'),
-  OnBoardingModel(title: '', body: ' ', image: ''),
+  // OnBoardingModel(title: '', body: ' ', image: ''),
 ];

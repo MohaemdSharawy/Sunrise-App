@@ -78,15 +78,15 @@ class CustomSliderOnBoarding extends GetView<OnBoardingControllerImplement> {
         //         style: AppFont.smallBlack,
         //       )
         //     : Container(),
-        InkWell(
-          child: Text(
-            'Skip',
-            style: AppFont.smallBlack,
-          ),
-          onTap: () => Get.to(
+        TextButton(
+          onPressed: () => Get.to(
             () => LoginScreen(),
           ),
-        ),
+          child: Text(
+            'Skip',
+            style: TextStyle(color: AppColor.primary),
+          ),
+        )
       ],
     );
   }
@@ -119,7 +119,7 @@ class CustomSliderOnBoarding extends GetView<OnBoardingControllerImplement> {
                   Container(
                     width: 150,
                     child: MaterialButton(
-                      height: 70,
+                      height: 50,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
@@ -143,7 +143,7 @@ class CustomSliderOnBoarding extends GetView<OnBoardingControllerImplement> {
                   Container(
                     width: 150,
                     child: MaterialButton(
-                      height: 70,
+                      height: 50,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
@@ -255,12 +256,17 @@ class _BookingScreenNewState extends State<BookingScreenNew> {
                       padding: EdgeInsets.all(15),
                       child: TextFormField(
                         controller: pax,
+                        keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Pax is required';
                           }
                         },
-                        keyboardType: TextInputType.text,
+                        onChanged: (value) {
+                          if (int.parse(value) < 1) {
+                            pax.text = "1";
+                          }
+                        },
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           labelText: tr("Pax"),
@@ -280,7 +286,7 @@ class _BookingScreenNewState extends State<BookingScreenNew> {
                       padding: EdgeInsets.all(15),
                       child: TextFormField(
                         controller: room_num,
-                        readOnly: false,
+                        readOnly: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Room Number is required';
@@ -594,18 +600,19 @@ class _BookingScreenNewState extends State<BookingScreenNew> {
               ],
             )),
         onPressed: () async {
-          String formattedDate = DateFormat('yyyy-MM-dd')
-              .format(DateTime.parse(days[selected_index]));
+          String formattedDate =
+              DateFormat('yyyy-MM-dd').format(DateTime.parse(days[index]));
 
           String day_name =
-              DateFormat('EEEE').format(DateTime.parse(days[selected_index]));
+              DateFormat('EEEE').format(DateTime.parse(days[index]));
 
-          setState(() {
+          setState(() async {
             selected_index = index;
             selected_formated_day = formattedDate;
             selected_day_name = day_name;
             selected_meal = 0;
           });
+
           await workingController.get_shifts_by_day(
               restaurant_id: restaurantController.single_restaurant.value.id,
               day_name: day_name,

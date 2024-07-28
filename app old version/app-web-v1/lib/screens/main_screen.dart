@@ -213,6 +213,7 @@ class _MainScreenState extends State<MainScreen> with BaseController {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      GetStorage().write('h_id' , widget.h_id);
       hotelAuth(widget.h_id.toString(), context);
       reload();
       _getData();

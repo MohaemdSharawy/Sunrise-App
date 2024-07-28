@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sunrise_app_v2/constant/app_font.dart';
 import 'package:sunrise_app_v2/controllers/onboarding_controller.dart';
 import 'package:sunrise_app_v2/utilites/onboarding/btn_on_boarding.dart';
@@ -16,6 +17,11 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   int current_page = 0;
+  @override
+  void initState() {
+    GetStorage().write('open_before', true);
+    super.initState();
+  }
 
   Widget build(BuildContext context) {
     Get.put(OnBoardingControllerImplement());

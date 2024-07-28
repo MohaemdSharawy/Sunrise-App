@@ -45,7 +45,7 @@ void main() async {
         AppConstant.IT_LOCAL,
         AppConstant.PL_LOCAL,
         AppConstant.RO_LOCAL,
-        // AppConstant.UA_LOCAL
+        AppConstant.UA_LOCAL
       ],
       // fallbackLocale: AppConstant.EN_LOCAL,
       path: AppConstant.LANG_PATH,

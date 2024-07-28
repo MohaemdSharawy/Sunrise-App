@@ -15,6 +15,8 @@ import 'package:tucana/screens/main_screen.dart';
 import 'dart:html' as htmls;
 
 class PmsController extends GetxController with BaseController {
+  List obifi_hotel = ['19', '15', '16'];
+
   var isLogin = false.obs;
   // final dio = Dio();
   Future login({
@@ -24,7 +26,7 @@ class PmsController extends GetxController with BaseController {
     required String birthday,
     String? login_type,
   }) async {
-    if (hotel_id != '19') {
+    if (!obifi_hotel.contains(hotel_id)) {
       print('updated');
       GetStorage().write('lang_loaded', "false");
       isLogin.value = false;
@@ -149,6 +151,15 @@ class PmsController extends GetxController with BaseController {
     } else {
       //KWANZA Login
 
+      // ! Key is hotel id  and value is opfi property
+      Map property_map = {
+        '19': "506",
+        '15': "603",
+        '16': "604",
+      };
+
+      print("property  is   ${property_map[hotel_id]}");
+
       DateTime date = DateTime.parse(birthday);
       String day = date.day.toString().padLeft(2, '0');
       String month = date.month.toString().padLeft(2, '0');
@@ -156,7 +167,7 @@ class PmsController extends GetxController with BaseController {
       print('Day: $day');
       print('Month: $month');
       var url = Uri.parse(
-          "https://apis.obifi.io/api/v1/feed/sunrise?client_key=5uOK7KZkwkq2mFToxWbV65Bnm8a3OqD3&client_secret=D722B4FD8F98287D55B377A2E81AB&tenant=panel&property_id=506&room_number=${room_no}&departure_day=${day}&departure_month=${month}");
+          "https://apis.obifi.io/api/v1/feed/sunrise?client_key=5uOK7KZkwkq2mFToxWbV65Bnm8a3OqD3&client_secret=D722B4FD8F98287D55B377A2E81AB&tenant=panel&property_id=${property_map[hotel_id]}&room_number=${room_no}&departure_day=${day}&departure_month=${month}");
 
       http.Client client = new http.Client();
       var response = await client.post(

@@ -284,14 +284,13 @@ class Api extends HttpOverrides {
     return dio.get('get_category_types/${restaurant_code}');
   }
 
-  static Future<Response> workingTimeByDay({
-    required String restaurant_id,
-    required String day_name,
-    String? date,
-    String? meal_id
-  }) {
-    return dio
-        .get('RestaurantWorkingDaysByDay/${restaurant_id}/${day_name}/${date}/${meal_id}');
+  static Future<Response> workingTimeByDay(
+      {required String restaurant_id,
+      required String day_name,
+      String? date,
+      String? meal_id}) {
+    return dio.get(
+        'RestaurantWorkingDaysByDay/${restaurant_id}/${day_name}/${date}/${meal_id}');
   }
 
   static Future<Response> getHotel({
@@ -392,10 +391,7 @@ class Api extends HttpOverrides {
     return dio.post('app_login/${h_id}', data: data);
   }
 
-
-  static Future<Response> get_booking_meals({required String h_id}) async{
-    return dio.get('get_meals/${h_id}');
+  static Future<Response> get_booking_meals({required String h_id}) async {
+    return dio.get('get_meals/${h_id}/${lang}');
   }
-
-
 } //end of api
