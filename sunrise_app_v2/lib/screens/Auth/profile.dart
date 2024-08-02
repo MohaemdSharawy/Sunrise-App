@@ -9,6 +9,7 @@ import 'package:sunrise_app_v2/constant/app_colors.dart';
 import 'package:sunrise_app_v2/constant/app_font.dart';
 import 'package:sunrise_app_v2/controllers/auth_controller.dart';
 import 'package:sunrise_app_v2/screens/language_screen.dart';
+import 'package:sunrise_app_v2/utilites/general/compelet_profile_widget.dart';
 import 'package:sunrise_app_v2/utilites/general/custom_header.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -27,8 +28,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   var check_in_data;
   void initState() {
     user_data = jsonDecode(GetStorage().read('user_data'));
-    check_in_data = jsonDecode(GetStorage().read('check_id_data'));
-    print(check_in_data);
+    if (GetStorage().read('check_id_data') != null) {
+      check_in_data = jsonDecode(GetStorage().read('check_id_data'));
+    }
     super.initState();
   }
 
@@ -87,64 +89,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(
                       height: 15,
                     ),
-                    Container(
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: AppColor.primary,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Text(
-                              'Complete Your Profile!',
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: AppColor.third,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              LinearPercentIndicator(
-                                barRadius: Radius.circular(12),
-                                width: MediaQuery.of(context).size.width / 1.3,
-                                lineHeight: 10.0,
-                                percent: 0.33,
-                                backgroundColor: AppColor.second,
-                                progressColor: AppColor.third,
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                color: AppColor.third,
-                              )
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 8, top: 4),
-                            child: Text(
-                              '(1/3 Add interests and preferences)',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: AppColor.third,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    CompleteProfileWidget(),
                     SizedBox(
                       height: 15,
                     ),
-                    if (user_data['checked_in'] == 1) ...[
+                    if (user_data['checked_in'] == 1 &&
+                        check_in_data != null) ...[
                       Text(
                         'Current Stay',
                         style: AppFont.smallBoldBlack,

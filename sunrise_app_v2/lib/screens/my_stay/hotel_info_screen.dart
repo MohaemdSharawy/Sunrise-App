@@ -156,7 +156,7 @@ class InfoImage extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
           ),
           child: ImageCustom(
-            image: "${AppUrl.main_domain}/uploads/hotel_info/${images[0]}",
+            image: "${AppUrl.main_domain}/uploads/hotel_gallery/${images[0]}",
             fit: BoxFit.cover,
             height: 150,
             width: MediaQuery.of(context).size.width,
@@ -182,7 +182,7 @@ class InfoImage extends StatelessWidget {
                   ),
                   child: ImageCustom(
                     image:
-                        "${AppUrl.main_domain}/uploads/hotel_info/${images[i]}",
+                        "${AppUrl.main_domain}/uploads/hotel_gallery/${images[i]}",
                     fit: BoxFit.cover,
                     height: 150,
                     width: 100,
@@ -214,7 +214,7 @@ class InfoImage extends StatelessWidget {
                         ),
                         child: ImageCustom(
                           image:
-                              "${AppUrl.main_domain}/uploads/hotel_info/${images[i]}",
+                              "${AppUrl.main_domain}/uploads/hotel_gallery/${images[i]}",
                           fit: BoxFit.cover,
                           height: 150,
                           width: 100,
@@ -234,7 +234,7 @@ class InfoImage extends StatelessWidget {
                         ),
                         child: ImageCustom(
                           image:
-                              "${AppUrl.main_domain}/uploads/hotel_info/${images[i]}",
+                              "${AppUrl.main_domain}/uploads/hotel_gallery/${images[i]}",
                           fit: BoxFit.cover,
                           height: 150,
                           width: 100,

@@ -24,6 +24,8 @@ class Hotels {
 
   late Destinations group;
 
+  late String? whatsapp;
+
   Hotels();
 
   Hotels.fromJson(json) {
@@ -40,6 +42,8 @@ class Hotels {
     hotel_logo_white = json['hotel_logo_white'];
 
     about_hotel = json['about_hotel'] ?? '';
+
+    whatsapp = json['whats_app'];
 
     group = Destinations.fromJson(json['group']);
   }

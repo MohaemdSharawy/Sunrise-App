@@ -7,4 +7,7 @@ class AppUrl {
       'https://yourcart.sunrise-resorts.com/';
 
   static const String survey_domain = 'https://surveys.sunrise-resorts.com/';
+
+  static const String letUsKnow = 'https://letusknow.sunrise-resorts.com/';
+
 }

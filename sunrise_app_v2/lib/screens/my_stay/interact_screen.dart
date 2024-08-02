@@ -7,6 +7,8 @@ import 'package:sunrise_app_v2/constant/app_icons.dart';
 import 'package:sunrise_app_v2/constant/app_urls.dart';
 import 'package:sunrise_app_v2/controllers/hotel_card_controller.dart';
 import 'package:sunrise_app_v2/controllers/hotels_controller.dart';
+import 'package:sunrise_app_v2/screens/my_stay/let_us_know_screen.dart';
+import 'package:sunrise_app_v2/utilites/animated_loader.dart';
 import 'package:sunrise_app_v2/utilites/general/custom_carousel_slider.dart';
 import 'package:sunrise_app_v2/utilites/general/custom_mystay_header.dart';
 import 'package:sunrise_app_v2/utilites/general/doted_fade.dart';
@@ -27,10 +29,10 @@ class _InteractScreenState extends State<InteractScreen> {
   final hotelController = Get.put(HotelController());
 
   Future<void> _getData() async {
-    hotelController.hotel_view(hotel_id: widget.hotel_id);
-    hotelController.getSlider(
+    await hotelController.hotel_view(hotel_id: widget.hotel_id);
+    await hotelController.getSlider(
         type_name: 'Interact Screen', hotel_id: widget.hotel_id);
-    hotelCardController.getSubCard(
+    await hotelCardController.getSubCard(
       hotel_id: widget.hotel_id,
       type_id: 1,
       master_id: widget.master_card_id,
@@ -124,62 +126,68 @@ class _InteractScreenState extends State<InteractScreen> {
                                       shrinkWrap: true,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        return Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              6,
-                                          child: Card(
-                                            clipBehavior: Clip.antiAlias,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            child: Stack(
-                                              children: [
-                                                Image.network(
-                                                  '${AppUrl.main_domain}uploads/hotel_cards_image/${hotelCardController.sub_cards[index].image}',
-                                                  height: double.infinity,
-                                                  width: double.infinity,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                Container(
-                                                  height: double.infinity,
-                                                  width: double.infinity,
-                                                  color: Colors.black
-                                                      .withOpacity(0.4),
-                                                ),
-                                                Container(
-                                                  height: 130,
-                                                  color: Colors.black
-                                                      .withOpacity(0.15),
-                                                ),
-                                                Positioned(
-                                                  child: Container(
-                                                    height: 40,
-                                                    width: 40,
-                                                    color: AppColor
-                                                        .card_label_back_ground,
-                                                    child: AppIcons.icons[
-                                                        hotelCardController
-                                                            .sub_cards[index]
-                                                            .icon],
+                                        return InkWell(
+                                          onTap: () => Get.to(LetUsKnowScreen(
+                                            hotel_id: widget.hotel_id,
+                                          )),
+                                          child: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                6,
+                                            child: Card(
+                                              clipBehavior: Clip.antiAlias,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              ),
+                                              child: Stack(
+                                                children: [
+                                                  Image.network(
+                                                    '${AppUrl.main_domain}uploads/hotel_cards_image/${hotelCardController.sub_cards[index].image}',
+                                                    height: double.infinity,
+                                                    width: double.infinity,
+                                                    fit: BoxFit.cover,
                                                   ),
-                                                ),
-                                                Align(
-                                                  alignment:
-                                                      Alignment.bottomCenter,
-                                                  child: Text(
-                                                    hotelCardController
-                                                        .sub_cards[index].name,
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 20),
+                                                  Container(
+                                                    height: double.infinity,
+                                                    width: double.infinity,
+                                                    color: Colors.black
+                                                        .withOpacity(0.4),
                                                   ),
-                                                )
-                                              ],
+                                                  Container(
+                                                    height: 130,
+                                                    color: Colors.black
+                                                        .withOpacity(0.15),
+                                                  ),
+                                                  Positioned(
+                                                    child: Container(
+                                                      height: 40,
+                                                      width: 40,
+                                                      color: AppColor
+                                                          .card_label_back_ground,
+                                                      child: AppIcons.icons[
+                                                          hotelCardController
+                                                              .sub_cards[index]
+                                                              .icon],
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    child: Text(
+                                                      hotelCardController
+                                                          .sub_cards[index]
+                                                          .name,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         );
@@ -199,9 +207,7 @@ class _InteractScreenState extends State<InteractScreen> {
                   ),
                 ),
               )
-            : WidgetDotFade(
-                color: AppColor.primary,
-              ),
+            : AnimatedLoader(),
       ),
     );
   }

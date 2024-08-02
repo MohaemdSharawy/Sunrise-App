@@ -14,6 +14,7 @@ import 'package:sunrise_app_v2/screens/hotel/hotel_facilities_screen.dart';
 import 'package:sunrise_app_v2/screens/my_stay/city_guide_scrren.dart';
 import 'package:sunrise_app_v2/screens/my_stay/entertainment_screen.dart';
 import 'package:sunrise_app_v2/screens/my_stay/hotel_info_screen.dart';
+import 'package:sunrise_app_v2/screens/my_stay/hotel_posh_club.dart';
 import 'package:sunrise_app_v2/screens/my_stay/interact_screen.dart';
 import 'package:sunrise_app_v2/utilites/animated_loader.dart';
 import 'package:sunrise_app_v2/utilites/general/custom_carousel_slider.dart';
@@ -73,6 +74,7 @@ class _HotelHomeScreenState extends State<HotelHomeScreen> {
         hotel_id: widget.hotel_id,
         master_card_id: 5,
       ),
+      'Posh Club': HotelPoshClubScreen(hotel_id: widget.hotel_id)
     };
     return Scaffold(
       body: Obx(

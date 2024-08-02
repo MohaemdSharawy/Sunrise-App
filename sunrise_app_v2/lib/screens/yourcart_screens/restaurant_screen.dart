@@ -8,6 +8,7 @@ import 'package:sunrise_app_v2/controllers/hotels_controller.dart';
 import 'package:sunrise_app_v2/controllers/yourcard/restaurant_controller.dart';
 import 'package:sunrise_app_v2/models/yourcard/restaurant_model.dart';
 import 'package:sunrise_app_v2/screens/yourcart_screens/category_screen.dart';
+import 'package:sunrise_app_v2/screens/yourcart_screens/restaurant_info_screen.dart';
 import 'package:sunrise_app_v2/utilites/animated_loader.dart';
 import 'package:sunrise_app_v2/utilites/general/custom_mystay_header.dart';
 import 'package:sunrise_app_v2/utilites/general/doted_fade.dart';
@@ -129,7 +130,8 @@ class RestaurantCard extends StatelessWidget {
     double name_padding = MediaQuery.of(context).size.height / 5;
     return InkWell(
       onTap: () {
-        Get.to(() => CategoryScreen(code: restaurant.code));
+        // Get.to(() => CategoryScreen(code: restaurant.code));
+        Get.to(() => RestaurantInfoScreen(restaurant_code: restaurant.code));
       },
       child: Container(
         height: MediaQuery.of(context).size.height / 2.9,

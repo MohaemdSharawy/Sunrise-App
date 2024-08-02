@@ -178,4 +178,35 @@ class ApiYourCard extends HttpOverrides {
     var formData = FormData.fromMap(postData);
     return dio.post('post_order/${restaurant_id}', data: formData);
   }
+
+  static Future<Response> restaurant_open_by_day({
+    required String restaurant_code,
+    required String day,
+  }) {
+    return dio.get('restaurant_working_time_by_day/${restaurant_code}/${day}');
+  }
+
+  static Future<Response> get_meal({required String restaurant_code}) async {
+    return dio.get('get_main_categories/${restaurant_code}');
+  }
+
+  static Future<Response> meal_category({
+    required String restaurant_code,
+    required String type_id,
+    required String meal_id,
+    required String day,
+  }) async {
+    return dio.get(
+        'get_categories/${restaurant_code}/en/${type_id}/${meal_id}/${day}');
+  }
+
+  static Future<Response> get_restaurant_by_code({
+    required String restaurant_code,
+  }) {
+    return dio.get('get_restaurant_by_code/${restaurant_code}');
+  }
+
+  static Future<Response> workingDay({required int restaurant_id}) async {
+    return dio.get('RestaurantWorkingDays/${restaurant_id}');
+  }
 } //end of api

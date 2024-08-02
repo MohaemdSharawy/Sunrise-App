@@ -244,4 +244,12 @@ class Api extends HttpOverrides {
   static Future<Response> remove_wish_list({required int wish_id}) {
     return dio.post('guest/remove_wish_list/${wish_id}');
   }
+
+  static Future<Response> get_general_posh_club() {
+    return dio.get('posh_club/general');
+  }
+
+  static Future<Response> get_hotel_posh_club({required int hotel_id}) {
+    return dio.get('posh_club/hotel/${hotel_id}');
+  }
 } //end of api

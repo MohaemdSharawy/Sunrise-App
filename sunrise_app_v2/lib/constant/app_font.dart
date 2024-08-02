@@ -73,6 +73,17 @@ class AppFont {
     fontSize: 15,
   );
 
+  static const TextStyle primarySecond = TextStyle(
+    color: AppColor.primary,
+    fontFamily: 'Raleway-medium',
+    fontSize: 15,
+  );
+
+  static const TextStyle thirdSecond = TextStyle(
+    color: AppColor.third,
+    fontFamily: 'Raleway-medium',
+    fontSize: 15,
+  );
   static const TextStyle midTinSecond = TextStyle(
     color: AppColor.second,
     fontFamily: 'Raleway-medium',

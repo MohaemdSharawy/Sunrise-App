@@ -104,9 +104,14 @@ flutter:
     - assets/View All Bars.png
     - assets/shisha.png
     - assets/minibar.png
+    - assets/Posh-banenr.png
     - assets/search-result-not-found-2130355-1800920.webp
     # flags
     - assets/flags/en.jpeg
+    # Let Us Know Icon
+    - assets/icons/bad.png
+    - assets/icons/good.png
+    - assets/icons/ok.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

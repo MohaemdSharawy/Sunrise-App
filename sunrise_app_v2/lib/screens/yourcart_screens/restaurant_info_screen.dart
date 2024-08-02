@@ -1,67 +1,67 @@
-import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:sunrise_app_v2/constant/app_colors.dart';
 import 'package:sunrise_app_v2/constant/app_font.dart';
 import 'package:sunrise_app_v2/constant/app_urls.dart';
-import 'package:sunrise_app_v2/controllers/hotels_controller.dart';
-import 'package:sunrise_app_v2/controllers/yourcard/wellness_controller.dart';
+import 'package:sunrise_app_v2/controllers/yourcard/restaurant_controller.dart';
+import 'package:sunrise_app_v2/screens/yourcart_screens/category_screen.dart';
+import 'package:sunrise_app_v2/screens/yourcart_screens/restaurant_booking_screen.dart';
 import 'package:sunrise_app_v2/utilites/animated_loader.dart';
 import 'package:sunrise_app_v2/utilites/general/custom_btn.dart';
 import 'package:sunrise_app_v2/utilites/general/custom_carousel_slider.dart';
 import 'package:sunrise_app_v2/utilites/general/custom_mystay_header.dart';
-import 'package:sunrise_app_v2/utilites/general/doted_fade.dart';
+import 'package:sunrise_app_v2/utilites/general/expanded_text.dart';
 import 'package:sunrise_app_v2/utilites/general/image_handel.dart';
+import 'package:sunrise_app_v2/utilites/yourcard/outlet_card_info.dart';
 
-class SpaScreen extends StatefulWidget {
-  String code;
-  SpaScreen({this.code = '', super.key});
+class RestaurantInfoScreen extends StatefulWidget {
+  String restaurant_code;
+  RestaurantInfoScreen({required this.restaurant_code, super.key});
 
   @override
-  State<SpaScreen> createState() => _SpaScreenState();
+  State<RestaurantInfoScreen> createState() => _RestaurantInfoScreenState();
 }
 
-class _SpaScreenState extends State<SpaScreen> {
-  final hotelController = Get.put(HotelController());
-  final wellnessController = Get.put(WellnessController());
+class _RestaurantInfoScreenState extends State<RestaurantInfoScreen> {
+  final restaurantController = Get.put(RestaurantController());
+
+  String day_selected = DateFormat('EEEE').format(DateTime.now());
 
   _getData() async {
-    var check_in_data = jsonDecode(GetStorage().read('check_in_hotel'));
-    await hotelController.get_hotel_ids_mapping(hotel_id: check_in_data['id']);
-    await hotelController.getSlider(
-        type_name: 'Spa Screen', hotel_id: check_in_data['id']);
-    await wellnessController.getSpas(
-      yourCart_hotel_id: hotelController.hotel_ids_mapping.value.your_cart_hid,
+    await restaurantController.getRestaurantInfo(
+      restaurant_code: widget.restaurant_code,
+      day: day_selected,
     );
-    await wellnessController.getSpaCategories(
-      spa_code: wellnessController.spa.value.code,
+    await restaurantController.getMails(
+        restaurant_code: widget.restaurant_code);
+  }
+
+  _updateWorkinDay() async {
+    await restaurantController.updateRestaurantWorkingDays(
+      restaurant_code: widget.restaurant_code,
+      day: day_selected,
     );
   }
 
   @override
   void initState() {
-    _getData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getData();
+    });
     super.initState();
   }
-
-  List cards = [
-    {'title': 'open', 'description': '15:00 AM'},
-    {'title': 'close', 'description': '19:00 AM'},
-    {'title': 'Dress Code', 'description': 'Casual'},
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       body: Obx(
-        () => (wellnessController.spaLoaded.value)
+        () => (restaurantController.info_loaded.value)
             ? SingleChildScrollView(
                 child: Container(
-                  // height: MediaQuery.of(context).size.height,
                   child: Column(
                     children: [
                       Stack(
@@ -88,11 +88,11 @@ class _SpaScreenState extends State<SpaScreen> {
                               child: CustomStayHeader(
                                 title: Column(
                                   children: [
+                                    // Text(restaurantController.restaurant.value.h),
                                     Text(
-                                        hotelController.hotel.value.hotel_name),
-                                    Text(
-                                      wellnessController
-                                          .spa.value.restaurant_name,
+                                      restaurantController
+                                          .restaurant.value.restaurant_name,
+                                      style: AppFont.boldBlack,
                                     ),
                                   ],
                                 ),
@@ -132,9 +132,9 @@ class _SpaScreenState extends State<SpaScreen> {
                                           ),
                                           Container(
                                             padding: EdgeInsets.all(8),
-                                            child: Text(
-                                              wellnessController
-                                                  .spa.value.description,
+                                            child: ExpandableText(
+                                              restaurantController
+                                                  .restaurant.value.description,
                                             ),
                                           )
                                         ],
@@ -142,64 +142,92 @@ class _SpaScreenState extends State<SpaScreen> {
                                     ),
                                   ),
                                 ),
-                                GridView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: cards.length,
-                                  gridDelegate:
-                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                    maxCrossAxisExtent: 150,
-                                    childAspectRatio: 3 / 2.3,
-                                    crossAxisSpacing: 5,
-                                    mainAxisSpacing: 5,
-                                  ),
-                                  itemBuilder: (context, index) => Container(
-                                    child: Card(
-                                      color: AppColor.background_card,
-                                      elevation: 0.5,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.all(5),
-                                            child: Text(
-                                              cards[index]['title'],
-                                              style: AppFont.midBoldSecond,
-                                            ),
+                                SizedBox(height: 15),
+                                if (restaurantController
+                                    .singleWorkingDay.isNotEmpty) ...[
+                                  for (var working_day
+                                      in restaurantController.singleWorkingDay)
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2.2,
+                                          child: OutLetCardScreen(
+                                            title: 'Open',
+                                            description: working_day.from_time,
                                           ),
-                                          Text(
-                                            cards[index]['description'],
-                                            style: TextStyle(
-                                                color: AppColor.primary),
-                                          )
-                                        ],
-                                      ),
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2.2,
+                                          child: OutLetCardScreen(
+                                            title: 'Close',
+                                            description: working_day.to_time,
+                                          ),
+                                        ),
+                                      ],
                                     ),
+                                ] else ...[
+                                  OutLetCardScreen(
+                                    title: 'Open',
+                                    description: 'All Day',
                                   ),
-                                ),
+                                ],
                                 SizedBox(
-                                  height: 12,
+                                  height: 15,
                                 ),
                                 Container(
-                                  height: 50,
-                                  width: double.infinity,
-                                  child: CustomBtn(
-                                    color: AppColor.second,
-                                    title: Text('Book'),
-                                    action: () => print(''),
+                                  padding: EdgeInsets.only(left: 10, right: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.4,
+                                        child: CustomBtn(
+                                          color: AppColor.primary,
+                                          title: Text('View Menu'),
+                                          action: () => Get.to(
+                                            CategoryScreen(
+                                              code: widget.restaurant_code,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 50,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.4,
+                                        child: CustomBtn(
+                                          color: AppColor.second,
+                                          title: Text('Book'),
+                                          action: () => Get.to(
+                                            BookingRestaurantScreen(
+                                              restaurant_code:
+                                                  restaurantController
+                                                      .restaurant.value.code,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                // SizedBox(
-                                //   height: 15,
-                                // ),
-                                // !TODO
-                                // !Show Product OF Spa
                                 ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
-                                  itemCount:
-                                      wellnessController.spaCategories.length,
+                                  itemCount: restaurantController.meal.length,
                                   shrinkWrap: true,
                                   itemBuilder:
                                       (BuildContext context, int index) =>
+                                          // Container()
                                           Container(
                                     padding: EdgeInsets.only(bottom: 12),
                                     child: Card(
@@ -216,20 +244,32 @@ class _SpaScreenState extends State<SpaScreen> {
                                                 topLeft: Radius.circular(20),
                                                 bottomLeft:
                                                     Radius.circular(20)),
-                                            child: ImageCustom(
-                                              image: (wellnessController
-                                                          .spaCategories[index]
-                                                          .logo !=
-                                                      '')
-                                                  ? '${AppUrl.restaurant_domain}/assets/uploads/categories/${wellnessController.spaCategories[index].logo}'
-                                                  : '${AppUrl.restaurant_domain}/assets/uploads/restaurants/${wellnessController.spa.value.logo}',
-                                              height: 140,
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  3,
-                                              fit: BoxFit.cover,
-                                            ),
+                                            child: (restaurantController
+                                                        .restaurant
+                                                        .value
+                                                        .image !=
+                                                    '')
+                                                ? ImageCustom(
+                                                    image:
+                                                        '${AppUrl.restaurant_domain}/assets/uploads/restaurants/${restaurantController.restaurant.value.image}',
+                                                    height: 100,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            3,
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                : Image.asset(
+                                                    'assets/no_image.png',
+                                                    height: 100,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            3,
+                                                    fit: BoxFit.cover,
+                                                  ),
                                           ),
                                           SizedBox(
                                             width: 12,
@@ -248,24 +288,12 @@ class _SpaScreenState extends State<SpaScreen> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  wellnessController
-                                                      .spaCategories[index]
-                                                      .category_name,
+                                                  restaurantController
+                                                      .meal[index]
+                                                      .main_category_name,
                                                   style: AppFont.midBoldSecond,
                                                   overflow:
                                                       TextOverflow.visible,
-                                                ),
-                                                SizedBox(
-                                                  height: 9,
-                                                ),
-                                                Text(
-                                                  wellnessController
-                                                      .spaCategories[index]
-                                                      .description,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 3,
-                                                  style: AppFont.midTinSecond,
                                                 ),
                                               ],
                                             ),

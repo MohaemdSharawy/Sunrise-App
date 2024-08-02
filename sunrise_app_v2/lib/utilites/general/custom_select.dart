@@ -7,8 +7,16 @@ class CustomDropdownSelect extends StatefulWidget {
   var valid;
   SingleValueDropDownController controller;
   List<DropDownValueModel> option;
-  CustomDropdownSelect(
-      {required this.controller, required this.option, this.valid, super.key});
+  bool enable_search;
+  String hint;
+  CustomDropdownSelect({
+    required this.controller,
+    required this.option,
+    this.valid,
+    this.enable_search = true,
+    this.hint = 'Select Your Resort',
+    super.key,
+  });
 
   @override
   State<CustomDropdownSelect> createState() => _CustomDropdownSelectState();
@@ -22,7 +30,7 @@ class _CustomDropdownSelectState extends State<CustomDropdownSelect> {
       listTextStyle: AppFont.smallBoldBlack,
       controller: widget.controller,
       textFieldDecoration: InputDecoration(
-        hintText: 'Select Your Resort',
+        hintText: widget.hint,
         hintStyle: AppFont.smallBoldBlack,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -34,7 +42,7 @@ class _CustomDropdownSelectState extends State<CustomDropdownSelect> {
           ),
         ),
       ),
-      enableSearch: true,
+      enableSearch: widget.enable_search,
       searchDecoration: InputDecoration(
         hintText: "Find Your Hotel",
         hintStyle: AppFont.tinyGrey,

@@ -10,11 +10,13 @@ import 'package:sunrise_app_v2/controllers/destination_controller.dart';
 import 'package:sunrise_app_v2/controllers/offer_controller.dart';
 import 'package:sunrise_app_v2/controllers/wish_list_controller.dart';
 import 'package:sunrise_app_v2/screens/all_offers_scrren.dart';
+import 'package:sunrise_app_v2/screens/general_posh_club_screen.dart';
 import 'package:sunrise_app_v2/screens/hotel_book_home.dart';
 import 'package:sunrise_app_v2/screens/resorts_screen.dart';
 import 'package:sunrise_app_v2/utilites/animated_loader.dart';
 import 'package:sunrise_app_v2/utilites/general/custom_header.dart';
 import 'package:sunrise_app_v2/utilites/general/doted_fade.dart';
+import 'package:sunrise_app_v2/utilites/general/hotel_home_card_widget.dart';
 import 'package:sunrise_app_v2/utilites/general/image_handel.dart';
 import 'package:sunrise_app_v2/utilites/general/offer_card.dart';
 
@@ -91,6 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         CustomHeader(),
                         destinations(),
                         brand(),
+                        posh_club(),
                         offers()
                       ],
                     ),
@@ -205,16 +208,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(color: AppColor.primary),
                 ),
               ),
-              // InkWell(
-              //   onTap: () => setState(() {
-              //     current_brand = null;
-              //   }),
-              //   child: Text(
-              //     'View All',
-              //     style: TextStyle(fontSize: 12),
-              //     // style: AppFont.smallBlack,
-              //   ),
-              // ),
             ],
           ),
           SizedBox(
@@ -268,108 +261,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ? Row(
                     children: [
                       for (var h_brand in brandController.hotel_brand)
-                        InkWell(
-                          onTap: () {
-                            Get.to(
-                              HotelHomeBookingScreen(
-                                hotel_id: h_brand.id,
-                              ),
-                            );
-                          },
-                          child: Container(
-                            height: 250,
-                            width: MediaQuery.of(context).size.width / 1.6,
-                            child: Card(
-                              color: Colors.white,
-                              elevation: 0,
-                              clipBehavior: Clip.antiAlias,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Stack(
-                                children: [
-                                  Ink.image(
-                                    image: NetworkImage(
-                                      "${AppUrl.main_domain}uploads/hotels/${h_brand.hotel_image}",
-                                    ),
-                                    fit: BoxFit.cover,
-                                    height: 130,
-                                    width:
-                                        MediaQuery.of(context).size.width / 1.6,
-                                  ),
-                                  Positioned(
-                                    left:
-                                        MediaQuery.of(context).size.width / 2.1,
-                                    top: 108,
-                                    child: InkWell(
-                                      onTap: () {
-                                        wishListHandel(h_brand.hotel_code);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(8.0),
-                                        decoration: BoxDecoration(
-                                          color: AppColor.backgroundColor,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Icon(
-                                          Icons.favorite,
-                                          size: 25.0,
-                                          color: (wishListController
-                                                  .isCodeInWishList(
-                                                      h_brand.hotel_code))
-                                              ? AppColor.primary
-                                              : Colors.grey,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                        top: 130.0, bottom: 10, left: 4),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.only(
-                                              left: 8.0, top: 7.0),
-                                          child: Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                3,
-                                            child: Text(
-                                              h_brand.hotel_name,
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.bold,
-                                                overflow: TextOverflow.visible,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 9),
-                                        Row(
-                                          children: [
-                                            Icon(Icons.location_on_outlined),
-                                            Text("${h_brand.group.name} "),
-                                            Text(h_brand.group.country)
-                                          ],
-                                        ),
-                                        // Row(
-                                        //   children: [Text('USD ,'), Text('Egypt')],
-                                        // ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        HotelHomeCardWidget(
+                          hotel: h_brand,
+                        )
                     ],
                   )
                 : Container(
@@ -415,23 +309,35 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             height: 15,
           ),
-          // Container(
-          //   width: MediaQuery.of(context).size.width,
-          //   padding: EdgeInsets.all(8),
-          //   height: 150,
-          //   decoration: BoxDecoration(
-          //     color: AppColor.background_card,
-          //     borderRadius: BorderRadius.circular(20),
-          //   ),
-          //   child: Image.asset('name'),
-          // ),
-          SizedBox(
-            height: 15,
-          ),
           Column(
             children: [
               for (var offer in offerController.offers) OfferCard(offer: offer)
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget posh_club() {
+    return Container(
+      margin: EdgeInsets.all(12.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Posh Club',
+            style: AppFont.smallBoldBlack,
+          ),
+          InkWell(
+            onTap: () => Get.to(GeneralPoshClubScreen()),
+            child: Image.asset(
+              height: 100,
+              width: MediaQuery.of(context).size.width,
+              'assets/Posh-banenr.png',
+              fit: BoxFit.fill,
+            ),
           ),
         ],
       ),
